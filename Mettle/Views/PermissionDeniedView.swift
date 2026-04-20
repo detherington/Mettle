@@ -2,7 +2,6 @@ import SwiftUI
 import AppKit
 
 struct PermissionDeniedView: View {
-    let statusCode: Int
     var onRequestAccess: () -> Void
 
     var body: some View {
@@ -35,11 +34,6 @@ struct PermissionDeniedView: View {
                 .buttonStyle(.bordered)
             }
             .padding(.top, 6)
-
-            Text("Diagnostic: AVAuthorizationStatus rawValue = \(statusCode) (0=notDetermined 1=restricted 2=denied 3=authorized)")
-                .font(.caption2)
-                .foregroundStyle(.secondary.opacity(0.6))
-                .padding(.top, 14)
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -3,14 +3,14 @@
     <channel>
         <title>Mettle</title>
         <item>
-            <title>1.0.3</title>
-            <pubDate>Mon, 20 Apr 2026 14:53:40 -0400</pubDate>
+            <title>1.0.4</title>
+            <pubDate>Mon, 20 Apr 2026 15:01:40 -0400</pubDate>
             <link>https://github.com/detherington/Mettle</link>
-            <sparkle:version>1.0.3</sparkle:version>
-            <sparkle:shortVersionString>1.0.3</sparkle:shortVersionString>
+            <sparkle:version>1.0.4</sparkle:version>
+            <sparkle:shortVersionString>1.0.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/detherington/Mettle/releases/download/v1.0.3/Mettle-1.0.3.dmg" length="5949799" type="application/octet-stream" sparkle:edSignature="yMV4FNdryLUnLatQbDMIl23WrqjJrAc7MUcfyfYA6VYgIFi1FA+uFAr8wrPBIctExovDX/Jq9226DW8MPjIBBA=="/>
+            <enclosure url="https://github.com/detherington/Mettle/releases/download/v1.0.4/Mettle-1.0.4.dmg" length="5945843" type="application/octet-stream" sparkle:edSignature="NvzTF9iLpKQfgrRFh8+1fKCcfYhWG5SUgfvCmcxghmaAkU0Lgc112nJVBMeOf0Hp0aYdE/4Rhz6l31oI2NObAQ=="/>
         </item>
     </channel>
 </rss>

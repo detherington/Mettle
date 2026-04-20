@@ -1,8 +1,5 @@
 import AVFoundation
-import OSLog
 import SwiftUI
-
-private let log = Logger(subsystem: "com.darrelletherington.Mettle", category: "permissions")
 
 struct ContentView: View {
     @EnvironmentObject private var appState: AppState
@@ -60,7 +57,6 @@ struct ContentView: View {
         switch authorizationStatus {
         case .denied, .restricted:
             PermissionDeniedView(
-                statusCode: Int(authorizationStatus.rawValue),
                 onRequestAccess: { Task { await requestCameraAccess() } }
             )
         case .notDetermined:
@@ -114,10 +110,7 @@ struct ContentView: View {
     }
 
     private func bootstrap() async {
-        let initial = AVCaptureDevice.authorizationStatus(for: .video)
-        log.notice("Launch — initial camera authorization status rawValue=\(initial.rawValue, privacy: .public)")
-
-        switch initial {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
             await requestCameraAccess()
         case let status:
@@ -130,12 +123,8 @@ struct ContentView: View {
     }
 
     private func requestCameraAccess() async {
-        let before = AVCaptureDevice.authorizationStatus(for: .video)
-        log.notice("requestCameraAccess — before rawValue=\(before.rawValue, privacy: .public)")
-        let granted = await AVCaptureDevice.requestAccess(for: .video)
-        let after = AVCaptureDevice.authorizationStatus(for: .video)
-        log.notice("requestCameraAccess — granted=\(granted, privacy: .public) after rawValue=\(after.rawValue, privacy: .public)")
-        authorizationStatus = after
+        _ = await AVCaptureDevice.requestAccess(for: .video)
+        authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
     }
 
     private func handleDeviceListChange(_ devices: [AVCaptureDevice]) {

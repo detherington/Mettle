@@ -1,5 +1,8 @@
 import AVFoundation
+import OSLog
 import SwiftUI
+
+private let log = Logger(subsystem: "com.darrelletherington.Mettle", category: "permissions")
 
 struct ContentView: View {
     @EnvironmentObject private var appState: AppState
@@ -56,7 +59,10 @@ struct ContentView: View {
     private var content: some View {
         switch authorizationStatus {
         case .denied, .restricted:
-            PermissionDeniedView()
+            PermissionDeniedView(
+                statusCode: Int(authorizationStatus.rawValue),
+                onRequestAccess: { Task { await requestCameraAccess() } }
+            )
         case .notDetermined:
             EmptyStateView(isSearching: true)
         case .authorized:
@@ -108,10 +114,12 @@ struct ContentView: View {
     }
 
     private func bootstrap() async {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        let initial = AVCaptureDevice.authorizationStatus(for: .video)
+        log.notice("Launch — initial camera authorization status rawValue=\(initial.rawValue, privacy: .public)")
+
+        switch initial {
         case .notDetermined:
-            let granted = await AVCaptureDevice.requestAccess(for: .video)
-            authorizationStatus = granted ? .authorized : .denied
+            await requestCameraAccess()
         case let status:
             authorizationStatus = status
         }
@@ -119,6 +127,15 @@ struct ContentView: View {
         // Give the iPhone 4 seconds to appear after launch (first-connect latency).
         try? await Task.sleep(nanoseconds: 4_000_000_000)
         hasFinishedInitialScan = true
+    }
+
+    private func requestCameraAccess() async {
+        let before = AVCaptureDevice.authorizationStatus(for: .video)
+        log.notice("requestCameraAccess — before rawValue=\(before.rawValue, privacy: .public)")
+        let granted = await AVCaptureDevice.requestAccess(for: .video)
+        let after = AVCaptureDevice.authorizationStatus(for: .video)
+        log.notice("requestCameraAccess — granted=\(granted, privacy: .public) after rawValue=\(after.rawValue, privacy: .public)")
+        authorizationStatus = after
     }
 
     private func handleDeviceListChange(_ devices: [AVCaptureDevice]) {

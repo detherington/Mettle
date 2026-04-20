@@ -20,3 +20,8 @@ Package.resolved
 *.app
 *.dSYM.zip
 *.dSYM
+
+# Release artifacts (upload zips to GitHub Releases; don't commit them)
+releases/
+Sparkle-*.tar.xz
+Sparkle-*/

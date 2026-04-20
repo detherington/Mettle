@@ -1,0 +1,49 @@
+name: Mettle
+options:
+  bundleIdPrefix: com.darrelletherington
+  deploymentTarget:
+    macOS: "13.0"
+  createIntermediateGroups: true
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.6.4"
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_HARDENED_RUNTIME: YES
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: "-"
+targets:
+  Mettle:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: Mettle
+    dependencies:
+      - package: Sparkle
+    info:
+      path: Mettle/Info.plist
+      properties:
+        CFBundleName: Mettle
+        CFBundleDisplayName: Mettle
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        NSHighResolutionCapable: true
+        NSCameraUsageDescription: "Mettle uses camera access to mirror your connected iPhone's screen."
+        NSMainStoryboardFile: ""
+        NSPrincipalClass: NSApplication
+        SUFeedURL: "https://raw.githubusercontent.com/detherington/Mettle/main/appcast.xml"
+        SUEnableAutomaticChecks: true
+        SUScheduledCheckInterval: 86400
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.darrelletherington.Mettle
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        COMBINE_HIDPI_IMAGES: YES

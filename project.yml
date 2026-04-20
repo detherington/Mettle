@@ -23,6 +23,7 @@ settings:
       CODE_SIGN_IDENTITY: "Developer ID Application"
       OTHER_CODE_SIGN_FLAGS: "--timestamp --options=runtime"
       CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+      CODE_SIGN_ENTITLEMENTS: Mettle/Mettle.entitlements
 targets:
   Mettle:
     type: application

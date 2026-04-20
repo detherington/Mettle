@@ -111,12 +111,19 @@ xcrun stapler validate "$DMG_PATH"
 
 echo "✓ Done: $DMG_PATH"
 
-# Default SPARKLE_TOOLS to the Sparkle SPM artifact inside DerivedData if present.
+# Default SPARKLE_TOOLS to the Sparkle SPM artifact. Check our local build dir
+# first (in case xcodebuild ran with -derivedDataPath), then fall back to the
+# user's DerivedData.
 if [[ -z "${SPARKLE_TOOLS:-}" ]]; then
-    CANDIDATE=$(/bin/ls -d ~/Library/Developer/Xcode/DerivedData/Mettle-*/SourcePackages/artifacts/sparkle/Sparkle 2>/dev/null | head -1)
-    if [[ -n "$CANDIDATE" ]]; then
-        SPARKLE_TOOLS="$CANDIDATE"
-    fi
+    for candidate in \
+        "$BUILD_DIR/SourcePackages/artifacts/sparkle/Sparkle" \
+        ~/Library/Developer/Xcode/DerivedData/Mettle-*/SourcePackages/artifacts/sparkle/Sparkle
+    do
+        if [[ -x "$candidate/bin/generate_appcast" ]]; then
+            SPARKLE_TOOLS="$candidate"
+            break
+        fi
+    done
 fi
 
 if [[ -n "${SPARKLE_TOOLS:-}" && -x "$SPARKLE_TOOLS/bin/generate_appcast" ]]; then

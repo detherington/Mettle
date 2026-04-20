@@ -72,7 +72,12 @@ do
              --sign "$SIGN_ID" "$target"
 done
 codesign --force --options=runtime --timestamp --sign "$SIGN_ID" "$SPARKLE_FW"
-codesign --force --options=runtime --timestamp --sign "$SIGN_ID" "$APP_PATH"
+# --preserve-metadata=entitlements keeps whatever entitlements xcodebuild
+# applied via CODE_SIGN_ENTITLEMENTS. Without this flag, the re-sign strips
+# them and the app loses camera access (and silently fails the TCC prompt).
+codesign --force --options=runtime --timestamp \
+         --preserve-metadata=entitlements \
+         --sign "$SIGN_ID" "$APP_PATH"
 
 echo "→ Verifying signature"
 codesign --verify --deep --strict --verbose=2 "$APP_PATH"

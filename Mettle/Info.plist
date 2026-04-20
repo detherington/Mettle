@@ -34,6 +34,8 @@
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://raw.githubusercontent.com/detherington/Mettle/main/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>ODjAca9kR1OJ8SuY35WtdhSjO7BM+sPltxEVWNBjqyo=</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
 </dict>
